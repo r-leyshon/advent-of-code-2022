@@ -20,3 +20,10 @@ most = max(calsCarried)
 whichMost = calsCarried.index(most)
 # outputs
 print(f"Elf number {whichMost} carried a total of {most:,} calories.")
+
+# Part 2 - find calorie total for the top 3 elves
+n1 = calsCarried.pop(calsCarried.index(max(calsCarried)))
+n2 = calsCarried.pop(calsCarried.index(max(calsCarried)))
+n3 = calsCarried.pop(calsCarried.index(max(calsCarried)))
+print(f"The 3 elves with the most calories carry a total of {n1+n2+n3:,} calories")
+
