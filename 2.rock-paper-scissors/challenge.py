@@ -22,27 +22,80 @@ The score for a single round is the score for the shape you selected (1 for Rock
 Paper, and 3 for Scissors) plus the score for the outcome of the round (0 if you lost, 3
 if the round was a draw, and 6 if you won)
 """
-scores = list()
-for x, y in zip(opponent, me):
+
+def choice_score(selection, outcome):
+    """Return the score for the chosen play.
+
+    Args:
+        selection (str): Either 'A', 'B' or 'C'. Corresponding to Rock,
+        Paper, Scissors.
+        outcome (str): Either 'lose', 'draw' or 'win'.
+
+    Returns:
+        int: An updated score including the selected value.
+    """
     score = 0
-    if y == "A":
+    if selection == "A":
         score += 1
-    elif y == "B":
+    elif selection == "B":
         score += 2
     else:
         score += 3
-
-    if x == y:
-        # catch all draw cases
-        score += 3
-    elif (x == "A" and y == "B") or (x == "B" and y == "C") or (x == "C" and y == "A"):
-        # catch all win cases
+    
+    if outcome == "win":
         score += 6
+    elif outcome == "draw":
+        score += 3
     else:
-        # lose conditions
-        print("I lose!")
+        return score
+
+    return score
+
+
+
+scores = list()
+for x, y in zip(opponent, me):
+    if x == y:
+        outcome = "draw"
+    elif (x == "A" and y == "B") or (x == "B" and y == "C") or (x == "C" and y == "A"):
+        outcome = "win"
+    else:
+        outcome = "lose"        
+
+    score = choice_score(y, outcome)
+
+
+    
     scores.append(score)
 print(f"In total, I scored {sum(scores):,} points")
 
+# Part 2
+"""Anyway, the second column says how the round needs to end: X means you
+need to lose, Y means you need to end the round in a draw, and Z means you
+need to win. Good luck!"""
+scores = list()
+for x, y in zip(opponent, me):
+    if y == "B":
+        # draw, so set your choice to opponents
+        choice = x
+        outcome = "draw"
+    elif y == "C":
+        outcome = "win"
+        if x == "A":
+            choice = "B"
+        elif x == "B":
+            choice = "C"
+        else:
+            choice = "A"
+    else:
+        outcome = "lose"
+        if x == "A":
+            choice = "C"
+        elif x == "B":
+            choice = "A"
+        else:
+            choice = "B"
+    score = choice_score(choice, outcome)
+    scores.append(score)
 
-
+print(f"After the new instructions, I scored {sum(scores):,} points.")
