@@ -1,5 +1,7 @@
 import os
 from pyprojroot import here
+# https://adventofcode.com/2022/day/1
+# Part 1 - find the value of the most calories carried
 # import
 with open(os.path.join(here(), "data", "1.calories.txt"), "r") as f:
     dat = f.read()
