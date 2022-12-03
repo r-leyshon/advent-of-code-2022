@@ -6,6 +6,7 @@ import re
 # read
 with open(os.path.join(here(), "data", "2.strategy-guide.txt"), "r") as f:
     txt = f.read()
+    f.close()
 txt = txt.replace(" ", "\n")
 txt = txt.split("\n")
 # process
