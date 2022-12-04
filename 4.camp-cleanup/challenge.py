@@ -59,6 +59,17 @@ sum(is_contained)
 
 # Part 2
 # Instead, the Elves would like to know the number of pairs that overlap at all.
+anyOverlap = list()
+for pair in elfZones:
+    overlap = set(pair[0]).intersection(set(pair[-1]))
+    if len(overlap) > 0:
+        anyOverlap.append(1)
+    else:
+        anyOverlap.append(0)
+    
+sum(anyOverlap)
+
+
 
 
 
