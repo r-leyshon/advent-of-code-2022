@@ -44,18 +44,16 @@ for pair in elfZones:
         firstlast = tuple([first, last])
         pairLimits.append(firstlast)
     
-    if pairLimits[0][0] >= pairLimits[-1][0] and pairLimits[0][-1] <= pairLimits[-1][-1]:
-        print("hit1")
+    if (pairLimits[0][0] >= pairLimits[-1][0]) and (
+        pairLimits[0][-1] <= pairLimits[-1][-1]):
         is_contained.append(1)
-    elif pairLimits[-1][0] >= pairLimits[0][0] and pairLimits[-1][-1] <= pairLimits[0][-1]:
-        print("hit2")
+    elif (pairLimits[-1][0] >= pairLimits[0][0]) and (
+        pairLimits[-1][-1] <= pairLimits[0][-1]):
         is_contained.append(1)
-    
     else:
-        print("miss")
         is_contained.append(0)
 
-sum(is_contained)
+print(f"The # of elf pairs that have contained zone ranges is {sum(is_contained)}")
 
 # Part 2
 # Instead, the Elves would like to know the number of pairs that overlap at all.
@@ -67,9 +65,4 @@ for pair in elfZones:
     else:
         anyOverlap.append(0)
     
-sum(anyOverlap)
-
-
-
-
-
+print(f"The number of elf pairs that have any overlapping zones is {sum(anyOverlap)}")
