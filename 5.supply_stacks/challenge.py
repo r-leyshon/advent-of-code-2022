@@ -49,10 +49,11 @@ def get_top_box(stack=stacks[0]):
     Args:
         stack (list): A list of stacked crates.
     Returns:
-        str: The topmost crate.
+        tuple: (int) The index of the topmost crate, (str) The topmost
+        crate content.
     """
-    for crate in stack:
+    for ind, crate in enumerate(stack):
         if crate == "---":
             pass
         else:
-            return crate
+            return (ind, crate)
