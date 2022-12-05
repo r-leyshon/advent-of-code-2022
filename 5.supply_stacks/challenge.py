@@ -11,6 +11,8 @@ with open(os.path.join(here(), "data", "5.crates.txt")) as f:
     f.close()
 
 crates, guide = txt.split("\n\n")
+guide = guide.splitlines()
+
 # too many spaces to see gaps in crates
 crates = crates.replace(" ", "-")
 crates = crates.splitlines()
@@ -39,3 +41,18 @@ for ind, stack in enumerate(stackLabels):
         column.append(row[ind])
     column.append(stack)
     stacks.append(column)
+
+
+def get_top_box(stack=stacks[0]):
+    """Get the top populated crate for a given stack
+
+    Args:
+        stack (list): A list of stacked crates.
+    Returns:
+        str: The topmost crate.
+    """
+    for crate in stack:
+        if crate == "---":
+            pass
+        else:
+            return crate
