@@ -55,10 +55,8 @@ def get_top_box(stack):
     """
     for ind, crate in enumerate(stack):
         if crate == "---":
-            print("Empty crate found!!!!!!")
             pass
         else:
-            print(f"We found a full crate: {crate}")
             return (ind, crate)
 
 
@@ -101,4 +99,5 @@ print(
     f"The top crates are {''.join(solution).replace('[', '').replace(']', '')}."
     )
 
+# Part 1
 
