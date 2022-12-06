@@ -1,5 +1,6 @@
 import os
 from pyprojroot import here
+import re
 
 # https://adventofcode.com/2022/day/5
 # Part 1
@@ -43,7 +44,7 @@ for ind, stack in enumerate(stackLabels):
     stacks.append(column)
 
 
-def get_top_box(stack=stacks[0]):
+def get_top_box(stack):
     """Get the top populated crate for a given stack
 
     Args:
@@ -54,6 +55,50 @@ def get_top_box(stack=stacks[0]):
     """
     for ind, crate in enumerate(stack):
         if crate == "---":
+            print("Empty crate found!!!!!!")
             pass
         else:
+            print(f"We found a full crate: {crate}")
             return (ind, crate)
+
+
+def interpret_rule(rule):
+    """Return the rule details from a string instruction.
+
+    Args:
+        rule (str): A rule to match entities and actions. Eg - 'move 5 from
+        8 to 2'.
+
+    Returns:
+        tuple: (int): number of crates to move. (int): Stack number to move
+        crates from. (int): Stack number to move crates to.
+    """
+    targetIdPat = re.compile("(?<=from )[\d]")
+    targetStack = int(targetIdPat.search(rule).group())
+    destIdPat = re.compile("(?<=to )[\d]")
+    destStack = int(destIdPat.search(rule).group())
+    nCratesPat = re.compile("(?<=move )[\d]+")
+    nCrates = int(nCratesPat.search(rule).group())
+    return (nCrates, targetStack - 1, destStack - 1)
+
+for rule in guide:
+    n, start, dest = interpret_rule(rule)
+    ind, crate = get_top_box(stacks[start])
+    movingCrates = stacks[start][ind:ind + n]
+    # update the remaining stack
+    stacks[start] = stacks[start][ind + n: len(stacks[start]) + 1]
+    # get the top crate for the destination stack
+    ind2, crate2 = get_top_box(stacks[dest])
+    for box in movingCrates:
+        stacks[dest].insert(ind2, box)
+
+solution = []
+for stack in stacks:
+    n, topBox = get_top_box(stack)
+    solution.append(topBox)
+
+print(
+    f"The top crates are {''.join(solution).replace('[', '').replace(']', '')}."
+    )
+
+
