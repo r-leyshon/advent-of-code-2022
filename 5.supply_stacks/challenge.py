@@ -79,16 +79,35 @@ def interpret_rule(rule):
     nCrates = int(nCratesPat.search(rule).group())
     return (nCrates, targetStack - 1, destStack - 1)
 
-for rule in guide:
-    n, start, dest = interpret_rule(rule)
+
+def move_crates(stacks, rule, crateModel="CrateMover 9000"):
+    """Move the crates and update the crate stacks according to a rule.
+
+    Args:
+        stacks (list): List of lists, containing the stacked crates.
+        rule (str): A rule to interpret, such as 'move 5 from 8 to 2'.
+        crateModel (str, optional): The model of crane to use. Defaults to "CrateMover
+        9000".
+
+    Returns:
+        None: Stacks will be updated in place.
+    """
+    n, start, dest = interpret_rule(rule)   
     ind, crate = get_top_box(stacks[start])
     movingCrates = stacks[start][ind:ind + n]
+    if crateModel == "CrateMover 9001":
+        movingCrates.reverse()
     # update the remaining stack
     stacks[start] = stacks[start][ind + n: len(stacks[start]) + 1]
     # get the top crate for the destination stack
     ind2, crate2 = get_top_box(stacks[dest])
     for box in movingCrates:
         stacks[dest].insert(ind2, box)
+    return None
+
+
+for rule in guide:
+    move_crates(stacks, rule)
 
 solution = []
 for stack in stacks:
@@ -99,5 +118,5 @@ print(
     f"The top crates are {''.join(solution).replace('[', '').replace(']', '')}."
     )
 
-# Part 1
+# Part 2
 
