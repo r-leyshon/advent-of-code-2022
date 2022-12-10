@@ -61,11 +61,26 @@ def sum_file_size(directory):
 
 smaller_100k = list()
 # get all the available directories
-for root, dirs, files in os.walk(tmp.name, topdown=False):
+for root, dirs, files in os.walk(tmp.name):
     for dir in dirs:
         tot = sum_file_size(os.path.join(root, dir))
         if tot <= 100000:
             smaller_100k.append(tot)
 
 print(f"The sum of the folders with size at most 100k: {sum(smaller_100k)}")
+
+# part 2
+# Find the smallest directory that, if deleted, would free up enough space on the
+# filesystem to run the update. What is the total size of that directory?
+filesystem = 70000000
+required = 30000000
+used = sum_file_size(tmp.name)
+free_up = abs(filesystem - required - used)
+qual_free_up = []
+for root, dirs, files in os.walk(tmp.name):
+    for dir in dirs:
+        tot = sum_file_size(os.path.join(root, dir))
+        if tot > free_up:
+            qual_free_up.append(tot)
+print(f"The size of the smallest folder to delete is {min(qual_free_up)}")
 tmp.cleanup()
